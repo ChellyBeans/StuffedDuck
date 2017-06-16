@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.example.aleysha.ubicomp_group_7.MainActivity">
 
+
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -38,4 +40,26 @@
         android:onClick="stopLocation"
         app:layout_constraintBaseline_toBaselineOf="@+id/button"
         app:layout_constraintLeft_toRightOf="@+id/button" />
+
+    <Button
+        android:id="@+id/camerabutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="Camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <FrameLayout
+        android:id="@+id/camera_view"
+        android:layout_width="180dp"
+        android:layout_height="120dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@id/camerabutton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+    </FrameLayout>
+
+
 </android.support.constraint.ConstraintLayout>

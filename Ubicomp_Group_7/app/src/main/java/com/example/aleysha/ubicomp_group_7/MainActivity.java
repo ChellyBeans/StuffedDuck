@@ -15,24 +15,42 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.hardware.Camera;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
     //widgets in the UI
-    private Button button, button2;
+    private Button button, button2, camerabutton;
     private TextView textView;
     private LocationManager locationManager;
     private LocationListener locationListener;
+    private Camera mCamera = null;
+    private CameraView mCameraView = null;
+    private int cameraId;
 
     @SuppressLint("ServiceCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         button = (Button) findViewById(R.id.button);
         button2 = (Button) findViewById(R.id.button2);
+        camerabutton = (Button) findViewById(R.id.camerabutton);
         textView = (TextView) findViewById(R.id.textView);
+
+
 
         //location manager and listener to get location from Android
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -62,27 +80,32 @@ public class MainActivity extends AppCompatActivity {
         };
         //Check for location permissions
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
                 },10);
-                return;
             }
         }
         else{
                 configureButton();
-            }
+                configureCamera();
+        }
+
+
     }
 
-    //if location permissions are granted, start location listener
+    //if location permissions are granted, start button listeners
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
         switch (requestCode){
             case 10:
                 if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     configureButton();
+                    configureCamera();
                 }
-                return;
         }
     }
 
@@ -97,8 +120,47 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void configureCamera(){
+        camerabutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                try{
+                    mCamera = Camera.open(findBackFacingCamera());//you can use open(int) to use different cameras
+                    Log.i("M1", "Camera OPENED " );
+
+                } catch (Exception e){
+                    Log.d("ERROR", "Failed to get camera: " + e.getMessage());
+                }
+
+                if(mCamera != null) {
+                    Log.i("M9", "Camera9" );
+                    mCameraView = new CameraView(view.getContext(), mCamera);//create a SurfaceView to show camera data
+                    FrameLayout camera_view = (FrameLayout)findViewById(R.id.camera_view);
+                    camera_view.addView(mCameraView);//add the SurfaceView to the layout
+
+                }
+            }
+        });
+    }
+
     //stop location listener
     public void stopLocation(View view){
         locationManager.removeUpdates(locationListener);
+    }
+
+    private int findBackFacingCamera() {
+
+        // Search for the front facing camera
+        int numberOfCameras = Camera.getNumberOfCameras();
+        for (int i = 0; i < numberOfCameras; i++) {
+            Camera.CameraInfo info = new Camera.CameraInfo();
+            Camera.getCameraInfo(i, info);
+            if (info.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                cameraId = i;
+                break;
+            }
+        }
+        return cameraId;
     }
 }
