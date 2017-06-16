@@ -14,7 +14,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+///
+/// The following code was taken from:
+/// [Tutorial] How to use camera with Android and Android Studio, by Aron Bordin
+/// http://blog.rhesoft.com/2015/04/02/tutorial-how-to-use-camera-with-android-and-android-studio/
+///
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder mHolder;
     private Camera mCamera;
