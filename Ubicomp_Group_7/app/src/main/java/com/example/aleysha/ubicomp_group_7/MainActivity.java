@@ -15,18 +15,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.Manifest;
-import android.app.Activity;
-import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 
+/// This activity is the base of the application. It is the only activity for the application
+/// as the user will not be able to navigate the application due to the application running
+/// inside a stuffed duck.
 public class MainActivity extends AppCompatActivity {
 
     //widgets in the UI
@@ -34,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private LocationManager locationManager;
     private LocationListener locationListener;
-    private Camera mCamera = null;
-    private CameraView mCameraView = null;
+    private Camera camera = null;
+    private CameraView cameraView = null;
     private int cameraId;
 
     @SuppressLint("ServiceCast")
@@ -45,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // obtain UI elements here
         button = (Button) findViewById(R.id.button);
         button2 = (Button) findViewById(R.id.button2);
         camerabutton = (Button) findViewById(R.id.camerabutton);
@@ -78,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
+
+        //TODO: make it so the application exits if important permissions are not fulfilled
         //Check for location permissions
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -90,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else{
+                //set up the buttons that need this access
                 configureButton();
                 configureCamera();
         }
@@ -120,25 +118,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // configure the camerabutton to open the camera upon click
+    // if camera is available, will add the view to the framelayout camera_view
     public void configureCamera(){
         camerabutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
                 try{
-                    mCamera = Camera.open(findBackFacingCamera());//you can use open(int) to use different cameras
-                    Log.i("M1", "Camera OPENED " );
+                    camera = Camera.open(findBackFacingCamera());
+                } catch (Exception e){}
 
-                } catch (Exception e){
-                    Log.d("ERROR", "Failed to get camera: " + e.getMessage());
-                }
-
-                if(mCamera != null) {
-                    Log.i("M9", "Camera9" );
-                    mCameraView = new CameraView(view.getContext(), mCamera);//create a SurfaceView to show camera data
+                if(camera != null) {
+                    cameraView = new CameraView(view.getContext(), camera);
                     FrameLayout camera_view = (FrameLayout)findViewById(R.id.camera_view);
-                    camera_view.addView(mCameraView);//add the SurfaceView to the layout
-
+                    camera_view.addView(cameraView);
                 }
             }
         });
@@ -149,9 +143,9 @@ public class MainActivity extends AppCompatActivity {
         locationManager.removeUpdates(locationListener);
     }
 
+    // Finds the rear facing camera and sends back the ID associated with it
     private int findBackFacingCamera() {
 
-        // Search for the front facing camera
         int numberOfCameras = Camera.getNumberOfCameras();
         for (int i = 0; i < numberOfCameras; i++) {
             Camera.CameraInfo info = new Camera.CameraInfo();
