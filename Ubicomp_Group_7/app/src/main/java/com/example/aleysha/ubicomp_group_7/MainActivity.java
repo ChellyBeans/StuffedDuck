@@ -8,15 +8,18 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.hardware.Camera;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 /// This activity is the base of the application. It is the only activity for the application
 /// as the user will not be able to navigate the application due to the application running
@@ -24,7 +27,7 @@ import android.widget.FrameLayout;
 public class MainActivity extends AppCompatActivity {
 
     //widgets in the UI
-    private Button button, button2, camerabutton;
+    private Button button, button2, sendButton,camerabutton;
     private TextView textView;
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private CameraView cameraView = null;
     private int cameraId;
 
+    static String loc ="";
     @SuppressLint("ServiceCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,33 @@ public class MainActivity extends AppCompatActivity {
         camerabutton = (Button) findViewById(R.id.camerabutton);
         textView = (TextView) findViewById(R.id.textView);
 
+        sendButton = (Button) findViewById(R.id.button3);
 
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            GMailSender sender = new GMailSender(
+                                    "ubicomp.duck@gmail.com",
+                                    "duck@123");
+                            /*
+                            TODO: actual image path to be added
+                             */
+                            sender.addAttachment(Environment.getExternalStorageDirectory().getPath()+"/627742_workout.jpg");
+                            Log.v("MainActivity",Environment.getExternalStorageDirectory().toString());
+
+                            sender.sendMail("Coordinates + Images", "Email Coordinates are: " +loc,
+                                    "ubicomp.duck@gmail.com",
+                                    "ubicomp.parent@gmail.com");
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }).start();
+            }
+        });
 
         //location manager and listener to get location from Android
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -53,7 +83,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(Location location) {
                 //get coordinates and print to UI
-                textView.append("\n " + location.getLatitude() + ", " + location.getLongitude());
+                String lat = "" +location.getLatitude();
+                String lon = "" +location.getLongitude();
+
+                textView.append("\n " + lat + ", " + lon);
+                /*
+                TODO: Add location coordinates
+                 */
+                loc = loc + "\n 1" + lat + ", " + lon;
             }
 
             @Override
@@ -80,9 +117,10 @@ public class MainActivity extends AppCompatActivity {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                     ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                     ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
                     ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
                 },10);
             }
         }

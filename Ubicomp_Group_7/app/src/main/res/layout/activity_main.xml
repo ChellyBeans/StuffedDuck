@@ -29,7 +29,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.344" />
+        app:layout_constraintHorizontal_bias="0.344"
+        app:layout_constraintVertical_bias="0.391" />
 
     <Button
         android:id="@+id/button2"
@@ -45,11 +46,20 @@
         android:id="@+id/camerabutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="83dp"
         android:text="Camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Mail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <FrameLayout
         android:id="@+id/camera_view"
@@ -58,8 +68,11 @@
         android:background="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@id/camerabutton"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="21dp">
     </FrameLayout>
+
+
 
 
 </android.support.constraint.ConstraintLayout>

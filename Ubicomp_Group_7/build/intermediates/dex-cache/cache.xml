@@ -3,21 +3,48 @@
 
     <item
         is-multidex="true"
-        jar="/Users/chelsey/Documents/GitHub/StuffedDuck/Ubicomp_Group_7/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jar="E:\Term 2\Ubiqutous Computing\repo\StuffedDuck\Ubicomp_Group_7\app\libs\additionnal.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="dbda4b58dcd25915e4b53283884aafd2c0a6f037">
-        <dex dex="/Users/chelsey/Documents/GitHub/StuffedDuck/Ubicomp_Group_7/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_0119c4e124435d4665c28bdd076520b90da7587f/classes.dex" />
+        sha1="bd9e8dc422bb8c8405359947fe9f4282b49f57f4">
+        <dex dex="E:\Term 2\Ubiqutous Computing\repo\StuffedDuck\Ubicomp_Group_7\app\build\intermediates\transforms\dex\debug\folders\1000\2\additionnal_e4ed81cb3c9d74b8ef1602128b429dd0a94450d0\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/chelsey/Documents/GitHub/StuffedDuck/Ubicomp_Group_7/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="E:\Term 2\Ubiqutous Computing\repo\StuffedDuck\Ubicomp_Group_7\app\libs\activation.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
-        <dex dex="/Users/chelsey/Documents/GitHub/StuffedDuck/Ubicomp_Group_7/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_f958bad096fe63a477bf7099f84bcf9c1e56ede3/classes.dex" />
+        sha1="d1257cbff6faa44c1f325ae0d9413522d4644383">
+        <dex dex="E:\Term 2\Ubiqutous Computing\repo\StuffedDuck\Ubicomp_Group_7\app\build\intermediates\transforms\dex\debug\folders\1000\2\activation_155ada519bc4568676c6bc0a05f2baa4d6062eb6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Term 2\Ubiqutous Computing\repo\StuffedDuck\Ubicomp_Group_7\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bd30c7982c468f5694c45f941d073fb54cd243ca">
+        <dex dex="E:\Term 2\Ubiqutous Computing\repo\StuffedDuck\Ubicomp_Group_7\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_9e140dd68366f4b5ea8ef758ba1b687830d3ef61\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Term 2\Ubiqutous Computing\repo\StuffedDuck\Ubicomp_Group_7\app\libs\mail.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="428e267abff0d10802ccde86b915da2c20471160">
+        <dex dex="E:\Term 2\Ubiqutous Computing\repo\StuffedDuck\Ubicomp_Group_7\app\build\intermediates\transforms\dex\debug\folders\1000\2\mail_3ce972ba4787bf8d10c429b37238b269b58a46c8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Term 2\Ubiqutous Computing\repo\StuffedDuck\Ubicomp_Group_7\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="12920f9016b8b05acbc2af7cdc13cef6946fe7d3">
+        <dex dex="E:\Term 2\Ubiqutous Computing\repo\StuffedDuck\Ubicomp_Group_7\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_932f7132df908443b9f13d812efcb3aa4ec740aa\classes.dex" />
     </item>
 
 </items>
