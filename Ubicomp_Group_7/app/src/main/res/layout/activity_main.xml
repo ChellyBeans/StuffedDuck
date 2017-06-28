@@ -1,78 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.aleysha.ubicomp_group_7.MainActivity">
-
+    <!--android:background="@drawable/duckbg"-->
 
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:id="@+id/GPSFreq"
+        android:layout_width="190dp"
+        android:layout_height="30dp"
+        android:text="GPS Freq (min)"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:id="@+id/GPSFreqEntry"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:text="3"
+        android:layout_toRightOf="@+id/GPSFreq"
+        android:layout_margin="5dp"
+        android:background="@android:color/white"
+        android:textAlignment="textEnd" />
+
+    <TextView
+        android:id="@+id/CameraFreq"
+        android:layout_width="190dp"
+        android:layout_height="30dp"
+        android:text="Camera Freq (min)"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_below="@+id/GPSFreq"/>
+
+    <EditText
+        android:id="@+id/CameraFreqEntry"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:text="3"
+        android:layout_toRightOf="@+id/CameraFreq"
+        android:layout_below="@+id/GPSFreqEntry"
+        android:layout_margin="5dp"
+        android:background="@android:color/white"
+        android:textAlignment="textEnd" />
+
+    <TextView
+        android:id="@+id/DeviceEmail"
+        android:layout_width="160dp"
+        android:layout_height="30dp"
+        android:text="Device Email:"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_below="@+id/CameraFreq"/>
+
+    <EditText
+        android:id="@+id/DeviceEmailEntry"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="ubicomp.duck@gmail.com"
+        android:layout_below="@+id/DeviceEmail"
+        android:background="@android:color/white"
+        android:inputType="textEmailAddress"/>
+
+    <TextView
+        android:id="@+id/DevicePassword"
+        android:layout_width="160dp"
+        android:layout_height="30dp"
+        android:text="Device Email Password:"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_below="@+id/DeviceEmailEntry"/>
+
+    <EditText
+        android:id="@+id/DevicePasswordEntry"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="duck@123"
+        android:layout_below="@+id/DevicePassword"
+        android:background="@android:color/white"
+        android:inputType="textPassword"/>
+
+    <TextView
+        android:id="@+id/ParentEmail"
+        android:layout_width="160dp"
+        android:layout_height="30dp"
+        android:text="Parent Email:"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_below="@+id/DevicePasswordEntry"/>
+
+    <EditText
+        android:id="@+id/ParentEmailEntry"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="ubicomp.parent@gmail.com"
+        android:layout_below="@+id/ParentEmail"
+        android:background="@android:color/white"
+        android:inputType="textEmailAddress"/>
+
+    <TextView
+        android:id="@+id/AlertMode"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:text="Alert Mode"
+        android:layout_margin="15dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_below="@+id/ParentEmailEntry"/>
+
+    <CheckBox
+        android:id="@+id/AlertModeCheckBox"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="15dp"
+        android:background="@android:color/white"
+        android:layout_below="@+id/ParentEmailEntry"
+        android:layout_toRightOf="@+id/AlertMode"/>
+
+    <TextView
+        android:id="@+id/GPSView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:text="GPS Coordinates"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Start"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.344"
-        app:layout_constraintVertical_bias="0.391" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:text="Stop"
-        android:onClick="stopLocation"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button"
-        app:layout_constraintLeft_toRightOf="@+id/button" />
-
-    <Button
-        android:id="@+id/camerabutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="83dp"
-        android:text="Camera"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send Mail"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:textAlignment="center"
+        android:background="@android:color/white"
+        android:layout_below="@+id/AlertModeCheckBox"
+        android:layout_centerInParent="true"
+        android:height="50dp"
+        android:width="200dp"/>
 
     <FrameLayout
-        android:id="@+id/camera_view"
-        android:layout_width="180dp"
-        android:layout_height="120dp"
+        android:id="@+id/CameraView"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
         android:background="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@id/camerabutton"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="21dp">
+        android:layout_below="@id/GPSView"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true">
     </FrameLayout>
 
+    <Button
+        android:id="@+id/StartBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="START"
+        android:layout_below="@+id/CameraView"
+        android:layout_centerHorizontal="true"/>
 
 
-
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
