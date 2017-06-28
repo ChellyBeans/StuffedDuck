@@ -80,7 +80,7 @@
 
     <TextView
         android:id="@+id/DevicePassword"
-        android:layout_width="160dp"
+        android:layout_width="250dp"
         android:layout_height="30dp"
         android:text="Device Email Password:"
         android:layout_marginTop="5dp"
