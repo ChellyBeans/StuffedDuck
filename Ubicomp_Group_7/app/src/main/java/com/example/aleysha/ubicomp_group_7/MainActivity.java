@@ -194,15 +194,20 @@ public class MainActivity extends AppCompatActivity {
                             deviceEmail.getText().toString(),
                             devicePassword.getText().toString());
 
-                    for(int i = 0; i < UnsentImageAddresses.size(); i++)
-                    {
+                    for (int i = 0; i < UnsentImageAddresses.size(); i++) {
                         sender.addAttachment(UnsentImageAddresses.get(i));
                     }
 
+
                     String bodyCoordinates = "";
-                    for(int i = 0; i < UnsentGPSLinks.size(); i++)
+                    if(UnsentGPSLinks.size() == 0)
                     {
-                        bodyCoordinates += UnsentGPSLinks.get(i) + "\n";
+                        bodyCoordinates += "No GPS addresses available during this notification.";
+                    }
+                    else {
+                        for (int i = 0; i < UnsentGPSLinks.size(); i++) {
+                            bodyCoordinates += UnsentGPSLinks.get(i) + "\n";
+                        }
                     }
 
                     Log.v("MainActivity",Environment.getExternalStorageDirectory().toString());
