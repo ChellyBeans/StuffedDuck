@@ -8,7 +8,12 @@
     tools:context="com.example.aleysha.ubicomp_group_7.MainActivity">
     <!--android:background="@drawable/duckbg"-->
 
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
         android:id="@+id/GPSFreq"
         android:layout_width="190dp"
@@ -145,13 +150,33 @@
         android:layout_toRightOf="@+id/AlertMode"/>
 
     <TextView
+        android:id="@+id/CameraMode"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:text="Camera On"
+        android:layout_margin="15dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_below="@+id/AlertMode"/>
+
+    <CheckBox
+        android:id="@+id/CameraModeCheckBox"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="15dp"
+        android:background="@android:color/white"
+        android:layout_below="@+id/AlertModeCheckBox"
+        android:layout_toRightOf="@+id/CameraMode"/>
+
+    <TextView
         android:id="@+id/GPSView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="GPS Coordinates"
         android:textAlignment="center"
         android:background="@android:color/white"
-        android:layout_below="@+id/AlertModeCheckBox"
+        android:layout_below="@+id/CameraModeCheckBox"
         android:layout_centerInParent="true"
         android:height="50dp"
         android:width="200dp"/>
@@ -174,5 +199,6 @@
         android:layout_below="@+id/CameraView"
         android:layout_centerHorizontal="true"/>
 
-
+    </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

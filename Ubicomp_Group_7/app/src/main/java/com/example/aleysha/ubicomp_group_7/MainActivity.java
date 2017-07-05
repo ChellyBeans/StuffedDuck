@@ -22,6 +22,10 @@ import android.widget.TextView;
 import android.hardware.Camera;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /// This activity is the base of the application. It is the only activity for the application
@@ -32,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     //widgets in the UI
     public static Button start;
     public static EditText gpsFreq, cameraFreq, deviceEmail, devicePassword, parentEmail;
-    public static CheckBox alertModeCheckBox;
+    public static CheckBox alertModeCheckBox, cameraModeCheckBox;
     public static TextView gpsView;
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         parentEmail = (EditText) findViewById(R.id.ParentEmailEntry);
         gpsView = (TextView) findViewById(R.id.GPSView);
         alertModeCheckBox = (CheckBox) findViewById(R.id.AlertModeCheckBox);
+        cameraModeCheckBox = (CheckBox) findViewById(R.id.CameraModeCheckBox);
 
         //location manager and listener to get location from Android
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -194,8 +199,10 @@ public class MainActivity extends AppCompatActivity {
                             deviceEmail.getText().toString(),
                             devicePassword.getText().toString());
 
-                    for (int i = 0; i < UnsentImageAddresses.size(); i++) {
-                        sender.addAttachment(UnsentImageAddresses.get(i));
+                    if(cameraModeCheckBox.isChecked()) {
+                        for (int i = 0; i < UnsentImageAddresses.size(); i++) {
+                            sender.addAttachment(UnsentImageAddresses.get(i));
+                        }
                     }
 
 
@@ -224,6 +231,41 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    public static void writeGPSFile()
+    {
+        File documentStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "GPSCoordindates");
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+                .format(new Date());
+
+        if(!documentStorageDir.exists())
+        {
+            if(!documentStorageDir.mkdirs())
+            {
+                return;
+            }
+        }
+
+        try {
+            File gpsFile = new File(documentStorageDir, "GPS_" + timeStamp + ".txt");
+            String gpsContent = "";
+            for (int i = 0; i < MainActivity.UnsavedGPSLinks.size(); i++) {
+                gpsContent += MainActivity.UnsavedGPSLinks.get(i) + "\n";
+            }
+
+            FileWriter filewriter = new FileWriter(gpsFile);
+            filewriter.append(gpsContent);
+            filewriter.flush();
+            filewriter.close();
+
+            MainActivity.UnsavedGPSLinks.clear();
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 }
 

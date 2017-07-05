@@ -73,6 +73,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                     if (safeToTakePicture) {
                         mCamera.takePicture(null, null, mPicture);
                         safeToTakePicture = false;
+
                     }
 
 
@@ -111,6 +112,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     };
 
     private static File getOutputMediaFile() {
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+                .format(new Date());
+
         File mediaStorageDir = new File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MyCameraApp");
 
@@ -120,14 +125,13 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
 
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-                .format(new Date());
-        File mediaFile;
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+
+        File mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
 
         MainActivity.UnsentImageAddresses.add(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
 
         File documentStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "GPSCoordindates");
+
 
         if(!documentStorageDir.exists())
         {
@@ -136,6 +140,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
                 return null;
             }
         }
+
         try {
             File gpsFile = new File(documentStorageDir, "GPS_" + timeStamp + ".txt");
             String gpsContent = "";
