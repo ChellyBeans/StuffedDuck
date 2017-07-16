@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
     public static Boolean alertMode = true;
 
     // Google map links of GPS coords
-    public static ArrayList<String> UnsavedGPSLinks = new ArrayList<String>();
+    public static HashMap<String, String> UnsavedGPSLinks = new HashMap<String, String>();
     public static ArrayList<String> UnsentImageAddresses = new ArrayList<String>();
-    public static ArrayList<String> UnsentGPSLinks = new ArrayList<String>();
+    public static LinkedList<TimeCoordPair>  UnsentGPSLinks = new LinkedList<>();
 
     static String loc ="";
     @SuppressLint("ServiceCast")
@@ -74,17 +74,20 @@ public class MainActivity extends AppCompatActivity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+
+                String timeStamp = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss")
+                        .format(new Date());
+
                 //get coordinates and print to UI
                 String lat = "" +location.getLatitude();
                 String lon = "" +location.getLongitude();
 
                 gpsView.append("\n " + lat + ", " + lon);
-                /*
-                TODO: Add location coordinates
-                 */
+                
                 loc = loc + "\n 1" + lat + ", " + lon;
-                UnsavedGPSLinks.add("http://maps.google.com/maps?q="+ lat + "," + lon);
-                UnsentGPSLinks.add("http://maps.google.com/maps?q="+ lat + "," + lon);
+                UnsavedGPSLinks.put(timeStamp, "http://maps.google.com/maps?q="+ lat + "," + lon);
+                //UnsentGPSLinks.put(timeStamp, "http://maps.google.com/maps?q="+ lat + "," + lon);
+                UnsentGPSLinks.add(new TimeCoordPair(timeStamp, new Coordinates(lon, lat)));
             }
 
             @Override
@@ -207,15 +210,48 @@ public class MainActivity extends AppCompatActivity {
 
 
                     String bodyCoordinates = "";
+
                     if(UnsentGPSLinks.size() == 0)
                     {
                         bodyCoordinates += "No GPS addresses available during this notification.";
                     }
                     else {
-                        for (int i = 0; i < UnsentGPSLinks.size(); i++) {
-                            bodyCoordinates += UnsentGPSLinks.get(i) + "\n";
+                        bodyCoordinates += "Recorded GPS coordinates:\n";
+
+                        int i = 0;
+                        Boolean firstWayPoint = true;
+                        String route = "https://www.google.com/maps/dir/?api=1";
+                        Boolean getRoute = UnsentGPSLinks.size() >= 2;
+
+                        for (TimeCoordPair pair: UnsentGPSLinks) {
+                            String coord = pair.coordinates.latitude + "," + pair.coordinates.longitude;
+                            bodyCoordinates += pair.time + "\t" + "http://maps.google.com/maps?q=" + coord + "\n";
+
+                            if(getRoute) {
+                                if (i == 0) //origin
+                                    route += "&origin=" + coord;
+                                else if (i == UnsentGPSLinks.size() - 1) //destination
+                                    route += "&destination=" + coord;
+                                else { //waypoints
+                                    if (firstWayPoint) {
+                                        route += "&waypoints=" + coord;
+                                        firstWayPoint = false;
+                                    } else {
+                                        route += "|" + coord;
+                                    }
+                                }
+                                i++;
+                            }
                         }
+
+                        if(getRoute) {
+                            route += "&travelmode=walking\n";
+                            bodyCoordinates += "\n Route (estimated):\n" + route;
+                        }
+
+
                     }
+
 
                     Log.v("MainActivity",Environment.getExternalStorageDirectory().toString());
 
@@ -223,8 +259,8 @@ public class MainActivity extends AppCompatActivity {
                             deviceEmail.getText().toString(),
                             parentEmail.getText().toString());
 
-                    UnsentGPSLinks.clear();
                     UnsentImageAddresses.clear();
+                    UnsentGPSLinks.clear();
 
                 } catch (Exception e) {
                     //Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
