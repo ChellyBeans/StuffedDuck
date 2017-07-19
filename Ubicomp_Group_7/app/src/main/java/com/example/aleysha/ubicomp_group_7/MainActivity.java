@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // configures the start button to set up GPS and Camera
     public void configureStart(){
         start.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -193,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
         return cameraId;
     }
 
+    // sends an gmail to the parent with what information the device tracked
     public static void sendGmail()
     {
         new Thread(new Runnable() {
@@ -227,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                             String coord = pair.coordinates.latitude + "," + pair.coordinates.longitude;
                             bodyCoordinates += pair.time + "\t" + "http://maps.google.com/maps?q=" + coord + "\n";
 
+                            // if we have enough points (at least two) we can create a route
                             if(getRoute) {
                                 if (i == 0) //origin
                                     route += "&origin=" + coord;

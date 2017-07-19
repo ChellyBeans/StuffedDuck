@@ -46,6 +46,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    // creates a timer for taking pictures
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3) {
 
@@ -111,6 +112,8 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         }
     };
 
+    // gets the picture that was taken and save it.
+    // currently the frequency of picturs being taken is the frequency of emails being sent
     private static File getOutputMediaFile() {
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
